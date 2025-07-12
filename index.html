@@ -1,197 +1,131 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Benle barışır mısın?</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barışalım mı?</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #ffeef2, #fff4f8);
-      font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      overflow: hidden;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9e3e3;
+      font-family: 'Arial', sans-serif;
+      flex-direction: column;
+    }
+
+    .container {
       text-align: center;
-      position: relative;
     }
 
     h1 {
-      font-size: 2rem;
-      color: #d6336c;
-      margin-bottom: 30px;
-      animation: fadeIn 2s ease;
+      font-size: 2.5em;
+      color: #d32f2f;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .buttons {
+      margin-top: 20px;
     }
 
-    #button-container {
-      display: flex;
-      gap: 20px;
-      z-index: 2;
-      flex-wrap: wrap;
-      justify-content: center;
-      position: relative;
-    }
-
-    button {
-      font-size: 1.1rem;
-      padding: 12px 25px;
+    .yes-button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      margin-right: 10px;
+      background-color: #4caf50;
+      color: white;
       border: none;
-      border-radius: 30px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.2s ease;
-      z-index: 2;
     }
 
-    #yesBtn {
-      background-color: #ff6fa1;
+    .no-button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      background-color: #f44336;
       color: white;
-      position: relative;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
-    #noBtn {
-      background-color: #ffc2d1;
-      color: white;
-      position: relative;
-    }
-
-    #surprise {
-      display: none;
-      font-size: 1.4rem;
-      color: #c2185b;
-      margin-top: 30px;
-      animation: fadeIn 2s ease;
-    }
-
-    .heart {
-      width: 20px;
-      height: 20px;
-      background: pink;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      animation: floatUp 4s linear forwards;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) rotate(45deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-600px) rotate(45deg);
-      }
+    .gif_container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-
-  <h1>Benle barışır mısın? 💕</h1>
-
-  <div id="button-container">
-    <button id="yesBtn">Evet 💖</button>
-    <button id="noBtn">Hayır 😢</button>
+  <div class="container">
+    <h1>Seni Üzdüğüm İçin Özür Dilerim. <br> Barışalım Mı?</h1>
+    <div class="buttons">
+      <button class="yes-button" onclick="handleYesClick()">Evet</button>
+      <button class="no-button" onclick="handleNoClick()">Hayır</button>
+    </div>
+    <div class="gif_container">
+      <img src="https://media.giphy.com/media/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+    </div>
   </div>
 
-  <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
-
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c2cfa47a54.mp3" type="audio/mp3">
-  </audio>
-
   <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const surprise = document.getElementById("surprise");
-    const music = document.getElementById("bgMusic");
+    const messages = [
+      "Emin misin?",
+      "Gerçekten emin misin??",
+      "Tam olarak emin olduğunu söyleyebilir misin?",
+      "Bir daha düşün lütfen!",
+      "Hayır dersen çok üzülürüm...",
+      "Gerçekten çok üzülürüm...",
+      "Çok ama çok üzülürüm...",
+      "Peki tamam, artık sormayacağım...",
+      "Şaka yaptım, lütfen evet de! ❤️"
+    ];
 
-    let clickCount = 0;
-    let noBtnActivated = false;
+    let messageIndex = 0;
 
-    yesBtn.addEventListener("click", () => {
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      surprise.style.display = "block";
-      let interval = setInterval(createHeart, 200);
-      setTimeout(() => clearInterval(interval), 3000);
-    });
-
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.style.left = `${Math.random() * 100}vw`;
-      heart.style.top = `${Math.random() * 100}vh`;
-      heart.style.background = `hsl(${Math.random() * 360}, 80%, 85%)`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
+    function handleNoClick() {
+      const noButton = document.querySelector('.no-button');
+      const yesButton = document.querySelector('.yes-button');
+      noButton.textContent = messages[messageIndex];
+      messageIndex = (messageIndex + 1) % messages.length;
+      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+      yesButton.style.fontSize = `${currentSize * 1.5}px`;
     }
 
-    noBtn.addEventListener("click", () => {
-      if (!noBtnActivated) {
-        noBtn.style.position = "fixed";
-        noBtnActivated = true;
-      }
+    function handleYesClick() {
+      // Direkt olarak teşekkür mesajı gösteren sayfa yerine burada içerik değiştiriliyor
+      document.body.innerHTML = `
+        <div style="text-align: center; padding-top: 100px; background-color: #ffe6e6; height: 100vh;">
+          <h1 style="color: #d32f2f; font-size: 2.5em;">Çok Mutlu Oldum! ❤️</h1>
+          <p style="font-size: 1.2em; color: #444;">Barıştığımıza çok sevindim 😊</p>
+        </div>
+      `;
+    }
 
-      if (clickCount < 10) {
-        const btnWidth = noBtn.offsetWidth;
-        const btnHeight = noBtn.offsetHeight;
-
-        const padding = 20;
-        const maxX = window.innerWidth - btnWidth - padding;
-        const maxY = window.innerHeight - btnHeight - padding;
-
-        const newX = Math.floor(Math.random() * maxX);
-        const newY = Math.floor(Math.random() * maxY);
-
-        noBtn.style.left = `${newX}px`;
-        noBtn.style.top = `${newY}px`;
-
-        const scale = 1 - ((clickCount + 1) * 0.07);
-        noBtn.style.transform = `scale(${scale})`;
-
-        clickCount++;
-        if (clickCount === 10) {
-          noBtn.style.display = "none";
+    // Opsiyonel: güncelleme kontrolü (çalışmazsa bile zarar vermez)
+    (async function checkForUpdates() {
+      const currentVersion = "1.0";
+      const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json";
+      try {
+        const response = await fetch(versionUrl);
+        if (!response.ok) {
+          console.warn("Versiyon bilgisi alınamadı.");
+          return;
         }
+        const data = await response.json();
+        const latestVersion = data.version;
+        const updateMessage = data.updateMessage;
+        if (currentVersion !== latestVersion) {
+          alert(updateMessage);
+        } else {
+          console.log("En son sürüm kullanılıyor.");
+        }
+      } catch (error) {
+        console.error("Güncelleme kontrolü hatası:", error);
       }
-    });
-
-    // Müzik otomatik başlamazsa kullanıcı tıklayınca başlat
-    window.addEventListener("click", () => {
-      music.play().catch(() => {});
-    });
+    })();
   </script>
-
 </body>
 </html>
