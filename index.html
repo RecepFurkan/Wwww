@@ -5,76 +5,82 @@
   <title>Benimle Barışır mısın?</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
+
     body {
       background: linear-gradient(to bottom right, #ffeef2, #fff4f8);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
     }
+
     h1 {
+      font-size: 2.5rem;
       color: #d6336c;
-      font-size: 2.8rem;
       margin-bottom: 40px;
-      text-shadow: 1px 1px 5px #ffebef;
+      text-align: center;
     }
+
     #buttons {
       position: relative;
       width: 100%;
       height: 200px;
     }
+
     button {
-      font-size: 1.2rem;
-      padding: 15px 30px;
-      margin: 10px;
+      font-size: 1.4rem;
+      padding: 18px 40px;
       border: none;
-      border-radius: 30px;
+      border-radius: 40px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease-in-out;
     }
+
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
+      z-index: 1;
+      position: relative;
     }
+
     #yesBtn:hover {
       background-color: #ff4d88;
     }
+
     #noBtn {
       background-color: #ffc2d1;
-      color: #fff;
+      color: white;
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 2;
     }
+
     #surprise {
       display: none;
-      margin-top: 50px;
+      margin-top: 30px;
       font-size: 1.5rem;
       color: #c2185b;
       text-align: center;
-      animation: fadeIn 1s ease forwards;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+
     .heart {
       position: absolute;
       width: 20px;
       height: 20px;
       background: pink;
       transform: rotate(45deg);
-      animation: float 6s infinite;
+      animation: float 6s linear infinite;
     }
+
     .heart::before,
     .heart::after {
       content: "";
@@ -84,14 +90,17 @@
       background: pink;
       border-radius: 50%;
     }
+
     .heart::before {
       top: -10px;
       left: 0;
     }
+
     .heart::after {
       left: -10px;
       top: 0;
     }
+
     @keyframes float {
       0% { transform: translateY(0) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
@@ -105,7 +114,7 @@
     <button id="yesBtn">Evet 💖</button>
     <button id="noBtn">Hayır 😢</button>
   </div>
-  <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum... 💌</div>
+  <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
@@ -114,7 +123,6 @@
 
     let clickCount = 0;
 
-    // Kalpler oluştur
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -128,16 +136,29 @@
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
       surprise.style.display = "block";
-      const interval = setInterval(createHeart, 100);
+      const interval = setInterval(createHeart, 150);
       setTimeout(() => clearInterval(interval), 5000);
     });
 
-    noBtn.addEventListener("mouseover", () => {
+    noBtn.addEventListener("mouseenter", () => {
       if (clickCount < 6) {
-        const maxX = window.innerWidth - noBtn.offsetWidth;
-        const maxY = window.innerHeight - noBtn.offsetHeight;
-        const newX = Math.random() * maxX;
-        const newY = Math.random() * maxY;
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
+
+        const padding = 50;
+        const maxX = window.innerWidth - btnWidth - padding;
+        const maxY = window.innerHeight - btnHeight - padding - 150; // Başlık alanı
+
+        let newX, newY;
+
+        // Rastgele ama Evet butonuyla çakışmayan pozisyon üret
+        do {
+          newX = Math.random() * maxX;
+          newY = Math.random() * maxY;
+        } while (
+          Math.abs(newX - yesBtn.offsetLeft) < 150 &&
+          Math.abs(newY - yesBtn.offsetTop) < 100
+        );
 
         noBtn.style.left = `${newX}px`;
         noBtn.style.top = `${newY}px`;
