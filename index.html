@@ -36,9 +36,9 @@
       display: flex;
       gap: 20px;
       z-index: 2;
-      position: relative;
       flex-wrap: wrap;
       justify-content: center;
+      position: relative;
     }
 
     button {
@@ -49,19 +49,19 @@
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.2s ease;
-      position: relative;
       z-index: 2;
     }
 
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
+      position: relative;
     }
 
     #noBtn {
       background-color: #ffc2d1;
       color: white;
-      position: static;
+      position: relative;
     }
 
     #surprise {
@@ -126,7 +126,6 @@
 
   <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
 
-  <!-- (İsteğe bağlı) Arka plan müziği -->
   <audio id="bgMusic" autoplay loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c2cfa47a54.mp3" type="audio/mp3">
   </audio>
@@ -160,7 +159,7 @@
 
     noBtn.addEventListener("click", () => {
       if (!noBtnActivated) {
-        noBtn.style.position = "absolute";
+        noBtn.style.position = "fixed";
         noBtnActivated = true;
       }
 
@@ -168,21 +167,15 @@
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
 
-        const padding = 30;
+        const padding = 20;
         const maxX = window.innerWidth - btnWidth - padding;
         const maxY = window.innerHeight - btnHeight - padding;
 
-        let newX, newY;
-        do {
-          newX = Math.random() * maxX;
-          newY = Math.random() * maxY;
-        } while (
-          Math.abs(newX - yesBtn.offsetLeft) < 100 &&
-          Math.abs(newY - yesBtn.offsetTop) < 50
-        );
+        const newX = Math.floor(Math.random() * maxX);
+        const newY = Math.floor(Math.random() * maxY);
 
-        noBtn.style.left = `${Math.min(newX, maxX)}px`;
-        noBtn.style.top = `${Math.min(newY, maxY)}px`;
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
 
         const scale = 1 - ((clickCount + 1) * 0.07);
         noBtn.style.transform = `scale(${scale})`;
