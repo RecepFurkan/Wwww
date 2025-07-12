@@ -14,9 +14,6 @@
       background-color: #f9e3e3;
       font-family: 'Arial', sans-serif;
       flex-direction: column;
-    }
-
-    .container {
       text-align: center;
     }
 
@@ -55,6 +52,35 @@
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
+    }
+
+    .romantic-page {
+      background: linear-gradient(to bottom, #ffe6f0, #ffe6cc);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: #d63384;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .romantic-page h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+    }
+
+    .romantic-page p {
+      font-size: 1.3em;
+      margin-bottom: 1.5em;
+    }
+
+    .romantic-page img {
+      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -95,35 +121,26 @@
     }
 
     function handleYesClick() {
-      // Direkt olarak teşekkür mesajı gösteren sayfa yerine burada içerik değiştiriliyor
       document.body.innerHTML = `
-        <div style="text-align: center; padding-top: 100px; background-color: #ffe6e6; height: 100vh;">
-          <h1 style="color: #d32f2f; font-size: 2.5em;">Çok Mutlu Oldum! ❤️</h1>
-          <p style="font-size: 1.2em; color: #444;">Barıştığımıza çok sevindim 😊</p>
+        <div class="romantic-page">
+          <h1>💖 Barıştığımıza Çok Sevindim! 💖</h1>
+          <p>Seninle her şey çok daha güzel...<br> Kalbim yeniden seninle doldu! 💞</p>
+          <img src="https://media.giphy.com/media/Z21HJj2kz9uBG/giphy.gif" alt="Romantic GIF">
         </div>
       `;
     }
 
-    // Opsiyonel: güncelleme kontrolü (çalışmazsa bile zarar vermez)
+    // Güncelleme kontrolü (opsiyonel)
     (async function checkForUpdates() {
       const currentVersion = "1.0";
       const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json";
       try {
         const response = await fetch(versionUrl);
-        if (!response.ok) {
-          console.warn("Versiyon bilgisi alınamadı.");
-          return;
-        }
+        if (!response.ok) return;
         const data = await response.json();
-        const latestVersion = data.version;
-        const updateMessage = data.updateMessage;
-        if (currentVersion !== latestVersion) {
-          alert(updateMessage);
-        } else {
-          console.log("En son sürüm kullanılıyor.");
-        }
+        if (currentVersion !== data.version) alert(data.updateMessage);
       } catch (error) {
-        console.error("Güncelleme kontrolü hatası:", error);
+        console.error("Versiyon kontrolü başarısız:", error);
       }
     })();
   </script>
