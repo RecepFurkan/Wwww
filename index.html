@@ -3,68 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Barışalım mı?</title>
+  <title>Barışalım mı Çılem? ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fff0f5;
+      overflow: hidden;
+    }
+
+    .container {
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f9e3e3;
-      font-family: 'Arial', sans-serif;
-      flex-direction: column;
       text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 20px;
     }
 
     h1 {
       font-size: 2.5em;
-      color: #d32f2f;
+      color: #d63384;
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .message {
+      font-size: 1.2em;
+      color: #6b0d3c;
+      margin-bottom: 20px;
+      max-width: 400px;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     .buttons {
-      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
     .yes-button {
-      font-size: 1.5em;
-      padding: 10px 20px;
-      margin-right: 10px;
-      background-color: #4caf50;
+      background: linear-gradient(to right, #ff4081, #f06292);
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
 
     .no-button {
-      font-size: 1.5em;
-      padding: 10px 20px;
-      background-color: #f44336;
+      background: linear-gradient(to right, #e57373, #ef5350);
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .gif_container {
+      margin-top: 30px;
     }
 
     .gif_container img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-top: 20px;
+      width: 250px;
+      border-radius: 15px;
+      animation: fadeIn 2.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff99cc;
+      font-size: 24px;
+      animation: float 6s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .romantic-page {
-      background: linear-gradient(to bottom, #ffe6f0, #ffe6cc);
+      background: linear-gradient(to bottom, #fff0f5, #ffe6e6);
       height: 100vh;
+      font-family: 'Great Vibes', cursive;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
-      color: #d63384;
+      color: #b30059;
       text-align: center;
       padding: 20px;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     .romantic-page h1 {
@@ -73,40 +133,47 @@
     }
 
     .romantic-page p {
-      font-size: 1.3em;
-      margin-bottom: 1.5em;
+      font-size: 1.8em;
+      max-width: 600px;
+      margin-bottom: 1em;
     }
 
     .romantic-page img {
-      max-width: 400px;
+      max-width: 350px;
       border-radius: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
+
+  <div class="hearts" id="hearts-container"></div>
+
   <div class="container">
-    <h1>Seni Üzdüğüm İçin Özür Dilerim. <br> Barışalım Mı?</h1>
+    <h1>Çılem, seni üzdüğüm için çok üzgünüm 💔</h1>
+    <div class="message">
+      Kalbim senden başka kimseyi istemiyor...<br>
+      Barışalım mı, yeniden birlikte gülelim mi? 🌸
+    </div>
     <div class="buttons">
-      <button class="yes-button" onclick="handleYesClick()">Evet</button>
-      <button class="no-button" onclick="handleNoClick()">Hayır</button>
+      <button class="yes-button" onclick="handleYesClick()">Evet 💖</button>
+      <button class="no-button" onclick="handleNoClick()">Hayır 😢</button>
     </div>
     <div class="gif_container">
-      <img src="https://media.giphy.com/media/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+      <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Heart GIF">
     </div>
   </div>
 
   <script>
     const messages = [
-      "Emin misin?",
+      "Emin misin Çılem?",
       "Gerçekten emin misin??",
-      "Tam olarak emin olduğunu söyleyebilir misin?",
-      "Bir daha düşün lütfen!",
-      "Hayır dersen çok üzülürüm...",
-      "Gerçekten çok üzülürüm...",
+      "Bir daha düşün bence...",
+      "Barışmazsak içim buruk kalır...",
       "Çok ama çok üzülürüm...",
-      "Peki tamam, artık sormayacağım...",
-      "Şaka yaptım, lütfen evet de! ❤️"
+      "Kalbim kırılır...",
+      "Lütfen bir şans daha... 💔",
+      "Şaka yapıyorum 😅 Yine de barışalım, olur mu? 💗"
     ];
 
     let messageIndex = 0;
@@ -117,32 +184,31 @@
       noButton.textContent = messages[messageIndex];
       messageIndex = (messageIndex + 1) % messages.length;
       const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-      yesButton.style.fontSize = `${currentSize * 1.5}px`;
+      yesButton.style.fontSize = `${currentSize * 1.2}px`;
     }
 
     function handleYesClick() {
       document.body.innerHTML = `
         <div class="romantic-page">
-          <h1>💖 Barıştığımıza Çok Sevindim! 💖</h1>
-          <p>Seninle her şey çok daha güzel...<br> Kalbim yeniden seninle doldu! 💞</p>
-          <img src="https://media.giphy.com/media/Z21HJj2kz9uBG/giphy.gif" alt="Romantic GIF">
+          <h1>💞 Barıştığımıza Çok Sevindim 💞</h1>
+          <p>Seninle olmak, dünyanın en güzel hissi...<br>
+          Kalbim hep seninle, Çılem 💗</p>
+          <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Romantic Hug GIF">
         </div>
       `;
     }
 
-    // Güncelleme kontrolü (opsiyonel)
-    (async function checkForUpdates() {
-      const currentVersion = "1.0";
-      const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json";
-      try {
-        const response = await fetch(versionUrl);
-        if (!response.ok) return;
-        const data = await response.json();
-        if (currentVersion !== data.version) alert(data.updateMessage);
-      } catch (error) {
-        console.error("Versiyon kontrolü başarısız:", error);
-      }
-    })();
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      heart.textContent = "💗";
+      document.getElementById("hearts-container").appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createHeart, 500);
   </script>
 </body>
 </html>
