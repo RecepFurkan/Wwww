@@ -5,40 +5,36 @@
   <title>Benimle Barışır mısın?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
       background: linear-gradient(to bottom right, #ffeef2, #fff4f8);
       font-family: 'Segoe UI', sans-serif;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
+      text-align: center;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       color: #d6336c;
-      margin-bottom: 30px;
-      text-align: center;
+      margin-bottom: 40px;
     }
 
-    #buttons {
-      display: flex;
-      flex-direction: row;
-      gap: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
+    #button-container {
       position: relative;
       width: 100%;
-      max-width: 600px;
+      max-width: 320px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     button {
@@ -49,12 +45,12 @@
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.2s ease-in-out;
+      position: relative;
     }
 
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
-      position: relative;
       z-index: 1;
     }
 
@@ -62,7 +58,8 @@
       background-color: #ffc2d1;
       color: white;
       position: absolute;
-      z-index: 2;
+      top: 0;
+      left: 0;
     }
 
     #surprise {
@@ -70,46 +67,6 @@
       margin-top: 30px;
       font-size: 1.5rem;
       color: #c2185b;
-      text-align: center;
-    }
-
-    audio {
-      display: none;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      transform: rotate(45deg);
-      animation: float 6s linear infinite;
-      z-index: 0;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
     }
   </style>
 </head>
@@ -117,56 +74,34 @@
 
   <h1>Benle barışır mısın? 💕</h1>
 
-  <div id="buttons">
+  <div id="button-container">
     <button id="yesBtn">Evet 💖</button>
     <button id="noBtn">Hayır 😢</button>
   </div>
 
-  <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
-
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2023/03/21/audio_295c404340.mp3" type="audio/mpeg">
-    Tarayıcınız müzik çalmayı desteklemiyor.
-  </audio>
+  <div id="surprise">🎁 Sürpriz: Seni çok seviyorum! 💌</div>
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const surprise = document.getElementById("surprise");
-    const bgMusic = document.getElementById("bgMusic");
-
     let clickCount = 0;
-
-    // Mobilde müziği başlatmak için kullanıcı etkileşimi gerekebilir
-    window.addEventListener("click", () => {
-      bgMusic.play().catch(() => {});
-    });
-
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.background = `hsl(${Math.random() * 360}, 70%, 80%)`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
 
     yesBtn.addEventListener("click", () => {
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
       surprise.style.display = "block";
-      const interval = setInterval(createHeart, 100);
-      setTimeout(() => clearInterval(interval), 5000);
     });
 
     noBtn.addEventListener("click", () => {
       if (clickCount < 6) {
+        const container = document.getElementById("button-container");
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
+        const padding = 10;
 
-        const padding = 20;
-        const maxX = window.innerWidth - btnWidth - padding;
-        const maxY = window.innerHeight - btnHeight - padding;
+        const maxX = container.offsetWidth - btnWidth - padding;
+        const maxY = container.offsetHeight - btnHeight - padding;
 
         const newX = Math.random() * maxX;
         const newY = Math.random() * maxY;
