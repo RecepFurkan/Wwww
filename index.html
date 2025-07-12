@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Benimle Barışır mısın?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
@@ -23,58 +24,57 @@
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       color: #d6336c;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       text-align: center;
     }
 
     #buttons {
       display: flex;
       flex-direction: row;
+      gap: 30px;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
-      margin-top: 30px;
       position: relative;
-      z-index: 1;
+      width: 100%;
+      max-width: 600px;
     }
 
     button {
-      font-size: 1.4rem;
-      padding: 18px 40px;
+      font-size: 1.3rem;
+      padding: 15px 30px;
       border: none;
       border-radius: 40px;
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.2s ease-in-out;
-      position: relative;
-      z-index: 1;
     }
 
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
-    }
-
-    #yesBtn:hover {
-      background-color: #ff4d88;
+      position: relative;
+      z-index: 1;
     }
 
     #noBtn {
       background-color: #ffc2d1;
       color: white;
       position: absolute;
-      top: 0;
-      left: 0;
+      z-index: 2;
     }
 
     #surprise {
       display: none;
-      margin-top: 50px;
+      margin-top: 30px;
       font-size: 1.5rem;
       color: #c2185b;
       text-align: center;
-      z-index: 1;
+    }
+
+    audio {
+      display: none;
     }
 
     .heart {
@@ -111,10 +111,6 @@
       0% { transform: translateY(0) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
     }
-
-    audio {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -128,7 +124,6 @@
 
   <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
 
-  <!-- Arka plan müziği -->
   <audio id="bgMusic" autoplay loop>
     <source src="https://cdn.pixabay.com/audio/2023/03/21/audio_295c404340.mp3" type="audio/mpeg">
     Tarayıcınız müzik çalmayı desteklemiyor.
@@ -142,7 +137,7 @@
 
     let clickCount = 0;
 
-    // Müzik başlasın
+    // Mobilde müziği başlatmak için kullanıcı etkileşimi gerekebilir
     window.addEventListener("click", () => {
       bgMusic.play().catch(() => {});
     });
@@ -164,24 +159,17 @@
       setTimeout(() => clearInterval(interval), 5000);
     });
 
-    noBtn.addEventListener("mouseenter", () => {
+    noBtn.addEventListener("click", () => {
       if (clickCount < 6) {
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
 
-        const padding = 50;
+        const padding = 20;
         const maxX = window.innerWidth - btnWidth - padding;
         const maxY = window.innerHeight - btnHeight - padding;
 
-        let newX, newY;
-
-        do {
-          newX = Math.random() * maxX;
-          newY = Math.random() * maxY;
-        } while (
-          Math.abs(newX - yesBtn.offsetLeft) < 150 &&
-          Math.abs(newY - yesBtn.offsetTop) < 100
-        );
+        const newX = Math.random() * maxX;
+        const newY = Math.random() * maxY;
 
         noBtn.style.left = `${newX}px`;
         noBtn.style.top = `${newY}px`;
