@@ -135,7 +135,6 @@
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const surprise = document.getElementById("surprise");
-    const body = document.body;
     const music = document.getElementById("bgMusic");
 
     let clickCount = 0;
@@ -182,8 +181,8 @@
           Math.abs(newY - yesBtn.offsetTop) < 50
         );
 
-        noBtn.style.left = `${newX}px`;
-        noBtn.style.top = `${newY}px`;
+        noBtn.style.left = `${Math.min(newX, maxX)}px`;
+        noBtn.style.top = `${Math.min(newY, maxY)}px`;
 
         const scale = 1 - ((clickCount + 1) * 0.07);
         noBtn.style.transform = `scale(${scale})`;
