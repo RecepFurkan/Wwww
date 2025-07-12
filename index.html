@@ -2,8 +2,8 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Benimle Barışır mısın?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benle barışır mısın?</title>
   <style>
     body {
       margin: 0;
@@ -15,14 +15,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       overflow: hidden;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       color: #d6336c;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
+      text-align: center;
     }
 
     #button-container {
@@ -38,35 +38,34 @@
     }
 
     button {
-      font-size: 1.3rem;
-      padding: 15px 30px;
+      font-size: 1.1rem;
+      padding: 12px 25px;
       border: none;
-      border-radius: 40px;
+      border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       transition: all 0.2s ease-in-out;
       position: relative;
+      z-index: 2;
     }
 
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
-      z-index: 1;
     }
 
     #noBtn {
       background-color: #ffc2d1;
       color: white;
       position: absolute;
-      top: 0;
-      left: 0;
     }
 
     #surprise {
       display: none;
-      margin-top: 30px;
-      font-size: 1.5rem;
+      margin-top: 25px;
+      font-size: 1.3rem;
       color: #c2185b;
+      text-align: center;
     }
   </style>
 </head>
@@ -75,11 +74,11 @@
   <h1>Benle barışır mısın? 💕</h1>
 
   <div id="button-container">
-    <button id="yesBtn">Evet 💖</button>
+    <button id="yesBtn">Evet ✨💖</button>
     <button id="noBtn">Hayır 😢</button>
   </div>
 
-  <div id="surprise">🎁 Sürpriz: Seni çok seviyorum! 💌</div>
+  <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
@@ -94,7 +93,7 @@
     });
 
     noBtn.addEventListener("click", () => {
-      if (clickCount < 6) {
+      if (clickCount < 10) {
         const container = document.getElementById("button-container");
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
@@ -103,17 +102,24 @@
         const maxX = container.offsetWidth - btnWidth - padding;
         const maxY = container.offsetHeight - btnHeight - padding;
 
-        const newX = Math.random() * maxX;
-        const newY = Math.random() * maxY;
+        let newX, newY;
+
+        do {
+          newX = Math.random() * maxX;
+          newY = Math.random() * maxY;
+        } while (
+          Math.abs(newX - yesBtn.offsetLeft) < 80 &&
+          Math.abs(newY - yesBtn.offsetTop) < 50
+        );
 
         noBtn.style.left = `${newX}px`;
         noBtn.style.top = `${newY}px`;
 
-        const scale = 1 - (clickCount + 1) * 0.1;
+        const scale = 1 - ((clickCount + 1) * 0.07);
         noBtn.style.transform = `scale(${scale})`;
 
         clickCount++;
-        if (clickCount === 6) {
+        if (clickCount === 10) {
           noBtn.style.display = "none";
         }
       }
