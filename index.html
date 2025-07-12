@@ -11,28 +11,34 @@
       background: linear-gradient(to bottom right, #ffeef2, #fff4f8);
       font-family: 'Segoe UI', sans-serif;
       height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      text-align: center;
+      position: relative;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #d6336c;
-      margin-bottom: 25px;
-      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     #button-container {
-      width: 100%;
-      max-width: 320px;
       display: flex;
-      justify-content: center;
       gap: 20px;
-      flex-wrap: wrap;
+      z-index: 2;
       position: relative;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     button {
@@ -41,29 +47,71 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: all 0.2s ease-in-out;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 2;
     }
 
     #yesBtn {
       background-color: #ff6fa1;
       color: white;
-      z-index: 1;
     }
 
     #noBtn {
       background-color: #ffc2d1;
       color: white;
-      position: static; /* BAŞTA normal pozisyonda */
-      z-index: 1;
+      position: static;
     }
 
     #surprise {
       display: none;
-      margin-top: 25px;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: #c2185b;
-      text-align: center;
+      margin-top: 30px;
+      animation: fadeIn 2s ease;
+    }
+
+    .heart {
+      width: 20px;
+      height: 20px;
+      background: pink;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: floatUp 4s linear forwards;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-600px) rotate(45deg);
+      }
     }
   </style>
 </head>
@@ -72,16 +120,24 @@
   <h1>Benle barışır mısın? 💕</h1>
 
   <div id="button-container">
-    <button id="yesBtn">Evet ✨💖</button>
+    <button id="yesBtn">Evet 💖</button>
     <button id="noBtn">Hayır 😢</button>
   </div>
 
   <div id="surprise">🎁 Sürpriz: Seni gerçekten çok ama çok seviyorum! 💌</div>
 
+  <!-- (İsteğe bağlı) Arka plan müziği -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c2cfa47a54.mp3" type="audio/mp3">
+  </audio>
+
   <script>
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const surprise = document.getElementById("surprise");
+    const body = document.body;
+    const music = document.getElementById("bgMusic");
+
     let clickCount = 0;
     let noBtnActivated = false;
 
@@ -89,30 +145,40 @@
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
       surprise.style.display = "block";
+      let interval = setInterval(createHeart, 200);
+      setTimeout(() => clearInterval(interval), 3000);
     });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.top = `${Math.random() * 100}vh`;
+      heart.style.background = `hsl(${Math.random() * 360}, 80%, 85%)`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
 
     noBtn.addEventListener("click", () => {
       if (!noBtnActivated) {
-        noBtn.style.position = "absolute"; // İlk tıklamada pozisyon değiştirilir
+        noBtn.style.position = "absolute";
         noBtnActivated = true;
       }
 
       if (clickCount < 10) {
-        const container = document.getElementById("button-container");
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
-        const padding = 10;
 
-        const maxX = container.offsetWidth - btnWidth - padding;
-        const maxY = container.offsetHeight - btnHeight - padding;
+        const padding = 30;
+        const maxX = window.innerWidth - btnWidth - padding;
+        const maxY = window.innerHeight - btnHeight - padding;
 
         let newX, newY;
-
         do {
           newX = Math.random() * maxX;
           newY = Math.random() * maxY;
         } while (
-          Math.abs(newX - yesBtn.offsetLeft) < 80 &&
+          Math.abs(newX - yesBtn.offsetLeft) < 100 &&
           Math.abs(newY - yesBtn.offsetTop) < 50
         );
 
@@ -127,6 +193,11 @@
           noBtn.style.display = "none";
         }
       }
+    });
+
+    // Müzik otomatik başlamazsa kullanıcı tıklayınca başlat
+    window.addEventListener("click", () => {
+      music.play().catch(() => {});
     });
   </script>
 
