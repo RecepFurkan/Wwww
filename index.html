@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Barışalım mı Çılem? ❤️</title>
+  <title>Bi’ Konuşalım mı? ❤️</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -120,95 +120,3 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: #b30059;
-      text-align: center;
-      padding: 20px;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    .romantic-page h1 {
-      font-size: 3em;
-      margin-bottom: 0.5em;
-    }
-
-    .romantic-page p {
-      font-size: 1.8em;
-      max-width: 600px;
-      margin-bottom: 1em;
-    }
-
-    .romantic-page img {
-      max-width: 350px;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-  </style>
-</head>
-<body>
-
-  <div class="hearts" id="hearts-container"></div>
-
-  <div class="container">
-    <h1>Çılem, seni üzdüğüm için çok üzgünüm 💔</h1>
-    <div class="message">
-      Kalbim senden başka kimseyi istemiyor...<br>
-      Barışalım mı, yeniden birlikte gülelim mi? 🌸
-    </div>
-    <div class="buttons">
-      <button class="yes-button" onclick="handleYesClick()">Evet 💖</button>
-      <button class="no-button" onclick="handleNoClick()">Hayır 😢</button>
-    </div>
-    <div class="gif_container">
-      <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Heart GIF">
-    </div>
-  </div>
-
-  <script>
-    const messages = [
-      "Emin misin Çılem?",
-      "Gerçekten emin misin??",
-      "Bir daha düşün bence...",
-      "Barışmazsak içim buruk kalır...",
-      "Çok ama çok üzülürüm...",
-      "Kalbim kırılır...",
-      "Lütfen bir şans daha... 💔",
-      "Şaka yapıyorum 😅 Yine de barışalım, olur mu? 💗"
-    ];
-
-    let messageIndex = 0;
-
-    function handleNoClick() {
-      const noButton = document.querySelector('.no-button');
-      const yesButton = document.querySelector('.yes-button');
-      noButton.textContent = messages[messageIndex];
-      messageIndex = (messageIndex + 1) % messages.length;
-      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-      yesButton.style.fontSize = `${currentSize * 1.2}px`;
-    }
-
-    function handleYesClick() {
-      document.body.innerHTML = `
-        <div class="romantic-page">
-          <h1>💞 Barıştığımıza Çok Sevindim 💞</h1>
-          <p>Seninle olmak, dünyanın en güzel hissi...<br>
-          Kalbim hep seninle, Çılem 💗</p>
-          <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Romantic Hug GIF">
-        </div>
-      `;
-    }
-
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-      heart.textContent = "💗";
-      document.getElementById("hearts-container").appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }
-
-    setInterval(createHeart, 500);
-  </script>
-</body>
-</html>
